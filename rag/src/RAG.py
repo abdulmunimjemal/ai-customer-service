@@ -7,21 +7,17 @@ from llama_index.core import (
                               PromptTemplate)
 from llama_index.llms.together import TogetherLLM
 from llama_index.embeddings.together import TogetherEmbedding
-from dotenv import load_dotenv
+from src.settings import settings
 import os
-from utils import create_path
-
-# Load environment variables
-load_dotenv()
 
 # Constants
-TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY")
-EMBEDDING_MODEL = "togethercomputer/m2-bert-80M-8k-retrieval"
-LLM_MODEL = "mistralai/Mixtral-8x7B-Instruct-v0.1"
-PERSIST_DIR = "./storage"
+TOGETHER_API_KEY = settings.TOGETHER_API_KEY
+EMBEDDING_MODEL = settings.EMBED_MODEL
+LLM_MODEL = settings.LLM_MODEL
+PERSIST_DIR = settings.PERSISTANCE_DIR
 
 llm = TogetherLLM(
-        model="mistralai/Mixtral-8x7B-Instruct-v0.1",
+        model=LLM_MODEL,
         api_key=TOGETHER_API_KEY
     )
 embed_model = TogetherEmbedding(
@@ -81,31 +77,31 @@ class RAGManager:
         return self.query_engine
 
 
-def chatbot(rag: RAGManager):
-    query_engine = rag.get_query_engine()
-    while True:
-        query = input("Enter your query: ")
-        if query == "exit":
-            break
-        response = query_engine.query(query)
-        print(response)
-
-
-# Usage example
+# Usage
 if __name__ == "__main__":
-    index_manager = RAGManager()
+    def chatbot(rag: RAGManager):
+        query_engine = rag.get_query_engine()
+        while True:
+            query = input("Enter your query: ")
+            if query == "exit":
+                break
+            response = query_engine.query(query)
+            print(response)
 
-    # # Add data
-    input_files = ['data/data.txt']
-    index_manager.add_data(input_files=input_files)
+    index_manager = RAGManager()
     chatbot(index_manager)
     
-    input("Press to Update Data")
-    # Update data
-    index_manager.update_data(input_files=input_files)
-    chatbot(index_manager)
+    # # # Add data
+    # input_files = ['data/data.txt']
+    # index_manager.add_data(input_files=input_files)
+    # chatbot(index_manager)
+    
+    # input("Press to Update Data")
+    # # Update data
+    # index_manager.update_data(input_files=input_files)
+    # chatbot(index_manager)
      
-    input("Press to Delete Data")
-        # Delete data
-    index_manager.delete_data(input_files=input_files)
-    chatbot(index_manager)
+    # input("Press to Delete Data")
+    #     # Delete data
+    # index_manager.delete_data(input_files=input_files)
+    # chatbot(index_manager)
