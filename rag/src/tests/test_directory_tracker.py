@@ -2,7 +2,7 @@ import pytest
 import tempfile
 import shutil
 import os
-from utils import DirectoryTracker  # Ensure this import matches your actual module name
+from src.utils.directory_tracker import DirectoryTracker  # Ensure this import matches your actual module name
 
 @pytest.fixture
 def test_dir():

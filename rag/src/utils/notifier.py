@@ -4,11 +4,11 @@ from src.RAG import RAGManager
 from src.utils.directory_tracker import DirectoryTracker
 
 class Notifier:
-    def __init__(self, directory_path, check_interval=5):
+    def __init__(self, directory_path, rag_manager: RAGManager, check_interval=5,):
         self.directory_path = directory_path
         self.check_interval = check_interval
         self.tracker = DirectoryTracker(directory_path)
-        self.rag_manager = RAGManager()
+        self.rag_manager = rag_manager
         self.running = False
 
     def start(self):
