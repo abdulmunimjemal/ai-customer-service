@@ -11,6 +11,7 @@ from src.settings import settings
 import os
 
 # Constants
+
 TOGETHER_API_KEY = settings.TOGETHER_API_KEY
 EMBEDDING_MODEL = settings.EMBED_MODEL
 LLM_MODEL = settings.LLM_MODEL
@@ -29,12 +30,13 @@ Settings.llm = llm
 Settings.embed_model = embed_model
 
 template = (
-"We have provided context information below. \n"
-"---------------------\n"
-"{context_str}"
-"\n---------------------\n"
-"Do not give me an answer if it is not mentioned in the context as a fact. \n"
-"Given this information, please provide me with an answer to the following:\n{query_str}\n")
+    "Context Information:\n"
+    "---------------------\n"
+    "{context_str}\n"
+    "---------------------\n"
+    "Please note: Only provide answers explicitly mentioned in the context as facts.\n"
+    "Based on the given information, answer the following question:\n{query_str}\n"
+)
 
 QA_PROMPT_TEMPLATE = PromptTemplate(template)
 
