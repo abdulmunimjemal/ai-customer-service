@@ -19,7 +19,7 @@ def shutdown_event():
     notifier.join()
 
 # Pass the notifier instance to the file router
-app.include_router(chat.router, prefix="/chat")
+app.include_router(chat.router, prefix="/chat", default=rag_manager)
 app.include_router(files.router, prefix="/files", default=notifier)
 
 @app.get("/")
