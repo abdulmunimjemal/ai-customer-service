@@ -7,7 +7,7 @@ from llama_index.core import (
                               PromptTemplate)
 from llama_index.llms.together import TogetherLLM
 from llama_index.embeddings.together import TogetherEmbedding
-from src.settings import settings
+from src.utils.config import settings
 import os
 
 # Constants

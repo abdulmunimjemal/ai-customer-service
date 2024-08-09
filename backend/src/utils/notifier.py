@@ -1,6 +1,6 @@
 import time
 import threading
-from src.RAG import RAGManager
+from src.core.rag_manager import RAGManager
 from src.utils.directory_tracker import DirectoryTracker
 
 class Notifier:

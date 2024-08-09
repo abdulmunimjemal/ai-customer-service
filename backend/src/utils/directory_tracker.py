@@ -53,18 +53,22 @@ class DirectoryTracker:
 
 
 
-# Example usage
-directory_path = './data'
-tracker = DirectoryTracker(directory_path)
+def main():
+    # Example usage
+    directory_path = './data'
+    tracker = DirectoryTracker(directory_path)
 
-changes = tracker.check_changes()
-if changes['added'] or changes['deleted'] or changes['updated']:
-    print("Changes detected:")
-    if changes['added']:
-        print(f"Added files: {changes['added']}")
-    if changes['deleted']:
-        print(f"Deleted files: {changes['deleted']}")
-    if changes['updated']:
-        print(f"Updated files: {changes['updated']}")
-else:
-    print(f"No changes detected in {directory_path}.")
+    changes = tracker.check_changes()
+    if changes['added'] or changes['deleted'] or changes['updated']:
+        print("Changes detected:")
+        if changes['added']:
+            print(f"Added files: {changes['added']}")
+        if changes['deleted']:
+            print(f"Deleted files: {changes['deleted']}")
+        if changes['updated']:
+            print(f"Updated files: {changes['updated']}")
+    else:
+        print(f"No changes detected in {directory_path}.")
+
+if __name__ == "__main__":
+    main()
