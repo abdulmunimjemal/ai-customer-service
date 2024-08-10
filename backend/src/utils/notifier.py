@@ -4,10 +4,10 @@ from src.core.rag_manager import RAGManager
 from src.utils.directory_tracker import DirectoryTracker
 
 class Notifier:
-    def __init__(self, directory_path, rag_manager: RAGManager, check_interval=5,):
+    def __init__(self, directory_path, rag_manager: RAGManager, check_interval=5):
         self.directory_path = directory_path
         self.check_interval = check_interval
-        self.tracker = DirectoryTracker(directory_path)
+        self.tracker = DirectoryTracker(directory_path, rag_manager)
         self.rag_manager = rag_manager
         self.running = False
 
@@ -37,17 +37,3 @@ class Notifier:
 
     def join(self):
         self.thread.join()
-
-if __name__ == "__main__":
-    directory_path = './data'
-    notifier = Notifier(directory_path)
-    notifier.run_in_thread()
-
-    # Example of how the main application can continue running
-    try:
-        while True:
-            print("We running this sh!")
-            time.sleep(5)
-    except KeyboardInterrupt:
-        notifier.stop()
-        notifier.join()

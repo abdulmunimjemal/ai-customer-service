@@ -2,8 +2,9 @@ import hashlib
 import os
 
 class DirectoryTracker:
-    def __init__(self, directory_path):
+    def __init__(self, directory_path, rag_manager=None):
         self.directory_path = directory_path
+        self.rag_manager = rag_manager
         self.file_hashes = self._calculate_directory_hashes()
 
     def _calculate_file_hash(self, file_path):
@@ -46,9 +47,19 @@ class DirectoryTracker:
         for file_path in self.file_hashes:
             if file_path not in current_hashes:
                 changes['deleted'].append(file_path)
-
         # Update the stored hashes to the new ones
         self.file_hashes = current_hashes
+        
+        if self.rag_manager:
+            if changes['added']:
+                print(f"Added files detected: {len(changes['added'])}")
+                self.rag_manager.add_data(changes['added'])
+            if changes['updated']:
+                print(f"Updated files detected: {len(changes['updated'])}")
+                self.rag_manager.update_data(changes['updated'])
+            if changes['deleted']:
+                print(f"Deleted files detected: {len(changes['deleted'])}")
+                self.rag_manager.delete_data(changes['deleted'])
         return changes
 
 

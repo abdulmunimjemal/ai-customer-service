@@ -5,9 +5,16 @@ from src.utils.notifier import Notifier
 router = APIRouter()
 file_manager = FileManager()
 
-# Ensure the Notifier instance is passed in from the main application
-def get_notifier(notifier: Notifier):
+# Ensure the Notifier and RAGManager instances are passed in from the main application
+def get_notifier():
+    from src.main import get_notifier
+    notifier = get_notifier()
     return notifier
+
+def get_rag_manager():
+    from src.main import get_rag_manager
+    rag_manager = get_rag_manager()
+    return rag_manager
 
 @router.post("/upload/")
 async def upload_file(file: UploadFile = File(...), notifier: Notifier = Depends(get_notifier)):
